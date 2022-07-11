@@ -24,7 +24,7 @@ simple_input <- function(wait_list, rate_in, rate_out, start_date, date_unit,
                                             by = rate_in - rate_out,
                                             length.out = length_output))
 
-  make_data <- make_data |>
+  make_data |>
     dplyr::mutate(list_size = ifelse(list_size < 0, 0, list_size)
     )
 
