@@ -9,8 +9,9 @@ simple_input(
   rate_in,
   rate_out,
   start_date,
+  end_date,
   date_unit,
-  length_output
+  historical
 )
 }
 \arguments{
@@ -24,10 +25,13 @@ date_unit) of assessments out}
 
 \item{start_date}{date. Date of initialisation}
 
+\item{end_date}{int. Length of output dataframe (i.e. number of rows)}
+
 \item{date_unit}{string. "day", "week", or "month". Date interval to output
 the dataframe in (in the same units as rate_*)}
 
-\item{length_output}{int. Length of output dataframe (i.e. number of rows)}
+\item{historical}{boolean. Is this historical data or a projection?
+affects the column name so it appears correctly on the graph}
 }
 \value{
 dataframe with two columns- date and waitlist size

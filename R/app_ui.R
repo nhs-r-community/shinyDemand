@@ -2,15 +2,33 @@
 #'
 #' @param request Internal parameter for `{shiny}`.
 #'     DO NOT REMOVE.
-#' @import shiny
+#' @import shiny shinydashboard
 #' @noRd
 app_ui <- function(request) {
   tagList(
     # Leave this function for adding external resources
     golem_add_external_resources(),
-    # Your application UI logic
-    fluidPage(
-      h1("demandAndCapacity")
+    dashboardPage(
+      dashboardHeader(title = "Demand and capacity"),
+      dashboardSidebar(
+        sidebarMenu(
+          menuItem("One node", tabName = "one_node", icon = icon("dashboard")),
+          menuItem("Two nodes", tabName = "two_nodes", icon = icon("th"))
+        )
+      ),
+      dashboardBody(
+        tabItems(
+          tabItem(tabName = "one_node",
+                  h1("One node"),
+                  mod_one_node_ui("one_node_1")
+                  ),
+
+          # Second tab content
+          tabItem(tabName = "two_nodes",
+                  h2("Widgets tab content")
+          )
+        )
+      )
     )
   )
 }

@@ -11,8 +11,11 @@ URL: https://github.com/nhs-r-community/shinyDemand
 BugReports: https://github.com/nhs-r-community/shinyDemand/issues
 Imports: 
     config (>= 0.3.1),
+    ggplot2,
     golem (>= 0.3.2),
-    shiny (>= 1.7.1)
+    shiny (>= 1.7.1),
+    shinydashboard,
+    tidyr
 Suggests: 
     spelling,
     testthat (>= 3.0.0)

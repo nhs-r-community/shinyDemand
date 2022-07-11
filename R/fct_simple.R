@@ -10,23 +10,30 @@
 #' @param rate_out numeric. Rate (expressed in the unit of time selected in
 #' date_unit) of assessments out
 #' @param start_date date. Date of initialisation
+#' @param end_date int. Length of output dataframe (i.e. number of rows)
 #' @param date_unit string. "day", "week", or "month". Date interval to output
 #' the dataframe in (in the same units as rate_*)
-#' @param length_output int. Length of output dataframe (i.e. number of rows)
+#' @param historical boolean. Is this historical data or a projection?
+#' affects the column name so it appears correctly on the graph
 #' @return dataframe with two columns- date and waitlist size
 #'
-simple_input <- function(wait_list, rate_in, rate_out, start_date, date_unit,
-                         length_output){
+simple_input <- function(wait_list, rate_in, rate_out, start_date,
+                         end_date, date_unit, historical){
 
-  make_data <- data.frame("date" = seq(start_date, by = date_unit,
-                                       length.out = length_output),
-                          "list_size" = seq(from = wait_list,
-                                            by = rate_in - rate_out,
-                                            length.out = length_output))
+  var_name <- ifelse(historical, "prev_list", "future_list")
 
-  make_data |>
-    dplyr::mutate(list_size = ifelse(list_size < 0, 0, list_size)
-    )
+  make_data <- data.frame("date" = seq(start_date, end_date, by = date_unit),
+                          variable = seq(from = wait_list,
+                                         by = rate_in - rate_out,
+                                         length.out = as.numeric(
+                                           end_date - start_date + 1
+                                         )))
 
+  names(make_data) <- c("date", var_name)
+
+  make_data[[var_name]][make_data[[var_name]] < 0] <- 0
+
+  make_data
 }
+
 
