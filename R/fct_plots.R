@@ -10,8 +10,8 @@
 wait_plot <- function(wait_frame){
 
   wait_frame |>
-    tidyr::pivot_longer(-date) |>
-    ggplot2::ggplot(ggplot2::aes(x = date, y = value,
-                                 group = name, colour = name)) +
+    tidyr::pivot_longer(type) |>
+    ggplot2::ggplot(ggplot2::aes(x = date, y = n,
+                                 group = value, colour = value)) +
     ggplot2::geom_line()
 }

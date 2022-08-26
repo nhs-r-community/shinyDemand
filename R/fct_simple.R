@@ -23,15 +23,15 @@ simple_input <- function(wait_list, rate_in, rate_out, start_date,
   var_name <- ifelse(historical, "prev_list", "future_list")
 
   make_data <- data.frame("date" = seq(start_date, end_date, by = date_unit),
-                          variable = seq(from = wait_list,
+                          n = seq(from = wait_list,
                                          by = rate_in - rate_out,
                                          length.out = as.numeric(
                                            end_date - start_date + 1
                                          )))
 
-  names(make_data) <- c("date", var_name)
+  make_data$type <- var_name
 
-  make_data[[var_name]][make_data[[var_name]] < 0] <- 0
+  make_data$n[make_data$n < 0] <- 0
 
   make_data
 }
