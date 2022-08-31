@@ -84,9 +84,9 @@ mod_one_node_server <- function(id, real_data){
         simple_input(wait_list = real_data$current_waiting_list,
                      rate_in = real_data$avg_week_ref,
                      rate_out = real_data$avg_week_treat,
-                     start_date = input$date_range_hx[1],
-                     end_date = input$date_range_hx[2],
-                     date_unit = "day",
+                     start_date = real_data$min_date_referrals,
+                     end_date = real_data$max_date_referrals,
+                     date_unit = real_data$date_unit,
                      historical = TRUE)
 
       } else {
