@@ -126,15 +126,15 @@ return_data <- function(selected_team){
   # avg_week_ax, avg_week_ref, avg_week_treat, ax_to_treat, ref_to_ax
 
   data.frame(
-    "avg_week_ax" = avg_week_ax, # average weekly assessments
-    "avg_week_ref" = avg_week_ref, # average weekly referrals in
-    "avg_week_treat" = avg_week_treat, # average weekly treatments
+    "avg_week_ax" = mean(avg_week_ax), # average weekly assessments
+    "avg_week_ref" = mean(avg_week_ref), # average weekly referrals in
+    "avg_week_treat" = mean(avg_week_treat), # average weekly treatments
     "ax_to_treat" = ax_to_treat, # proportion assessment to treatment
     "ref_to_ax" = ref_to_ax, # proportion referral to assessment
     "current_waiting_list" = current_waiting_list,
     "min_date_referrals" = min(referrals$referral_date),
     "max_date_referrals" = max(referrals$referral_date),
-    "first_appt" = min(referrals$first_appt),
+    "first_appt" = min(referrals$first_appt, na.rm = TRUE),
     "date_unit" = "week"
     )
 }

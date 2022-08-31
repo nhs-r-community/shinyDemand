@@ -22,12 +22,12 @@ simple_input <- function(wait_list, rate_in, rate_out, start_date,
 
   var_name <- ifelse(historical, "prev_list", "future_list")
 
-  make_data <- data.frame("date" = seq(start_date, end_date, by = date_unit),
-                          n = seq(from = wait_list,
-                                         by = rate_in - rate_out,
-                                         length.out = as.numeric(
-                                           end_date - start_date + 1
-                                         )))
+  make_data <- data.frame("date" = seq(start_date, end_date, by = date_unit))
+
+  make_data$n <- seq(from = wait_list,
+                     by = rate_in - rate_out,
+                     length.out = nrow(make_data)
+                     )
 
   make_data$type <- var_name
 
