@@ -13,6 +13,8 @@
 
 # Engineering
 
+stop()
+
 ## Dependencies ----
 
 # pipe
