@@ -72,23 +72,11 @@ mod_no_data_one_node_ui <- function(id){
 #' no_data_one_node Server Functions
 #'
 #' @noRd
-mod_no_data_one_node_server <- function(id, real_data){
+mod_no_data_one_node_server <- function(id){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
 
     historical_data <- reactive({
-
-      if(input$load_data){
-
-        simple_input(wait_list = real_data$current_waiting_list,
-                     rate_in = real_data$avg_week_ref,
-                     rate_out = real_data$avg_week_treat,
-                     start_date = real_data$min_date_referrals,
-                     end_date = real_data$max_date_referrals,
-                     date_unit = real_data$date_unit,
-                     historical = TRUE)
-
-      } else {
 
         simple_input(wait_list = input$wait_list_hx,
                      rate_in = input$rate_in_hx,
@@ -97,7 +85,6 @@ mod_no_data_one_node_server <- function(id, real_data){
                      end_date = input$date_range_hx[2],
                      date_unit = "day",
                      historical = TRUE)
-      }
     })
 
     daily_data <- reactive({

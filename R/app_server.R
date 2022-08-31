@@ -10,7 +10,10 @@ app_server <- function(input, output, session) {
   if(exists("return_data")){
 
     real_data <- return_data("tm378")
+
+    mod_data_one_node_server("data_one_node_1", real_data = real_data)
   }
 
-  mod_no_data_one_node_server("no_data_one_node_1", real_data = real_data)
+    mod_no_data_one_node_server("no_data_one_node_1")
+
 }

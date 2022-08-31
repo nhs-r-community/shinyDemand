@@ -13,7 +13,8 @@ app_ui <- function(request) {
       dashboardSidebar(
         sidebarMenu(
           menuItem("One node", tabName = "one_node", icon = icon("dashboard")),
-          menuItem("Two nodes", tabName = "two_nodes", icon = icon("th"))
+          menuItem("Two nodes", tabName = "two_nodes", icon = icon("th")),
+          checkboxInput("load_data", "Load data?")
 
         )
       ),
@@ -21,8 +22,15 @@ app_ui <- function(request) {
         tabItems(
           tabItem(tabName = "one_node",
                   h1("One node"),
-                  mod_no_data_one_node_ui("no_data_one_node_1")
+                  conditionalPanel("!input.load_data",
+                                   mod_no_data_one_node_ui("no_data_one_node_1")
+
                   ),
+                  conditionalPanel("input.load_data",
+                                   mod_data_one_node_ui("data_one_node_1")
+                  )
+
+          ),
 
           # Second tab content
           tabItem(tabName = "two_nodes",
