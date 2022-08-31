@@ -14,8 +14,16 @@
 # Engineering
 
 ## Dependencies ----
+
+# pipe
+
+usethis::use_pipe()
+
 ## Amend DESCRIPTION with dependencies read from package code parsing
 attachment::att_amend_desc()
+
+usethis::use_package("dplyr")
+usethis::use_dev_package("nottshcData")
 
 ## Add modules ----
 ## Create a module infrastructure in R/

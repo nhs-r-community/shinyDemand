@@ -9,7 +9,7 @@ app_server <- function(input, output, session) {
 
   if(exists("return_data")){
 
-    real_data <- return_data()
+    real_data <- return_data("tm378")
   }
 
   mod_one_node_server("one_node_1", real_data = real_data)

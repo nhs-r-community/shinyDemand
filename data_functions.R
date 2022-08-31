@@ -134,6 +134,7 @@ return_data <- function(selected_team){
     "current_waiting_list" = current_waiting_list,
     "min_date_referrals" = min(referrals$referral_date),
     "max_date_referrals" = max(referrals$referral_date),
-    "first_appt" = min(referrals$first_appt)
+    "first_appt" = min(referrals$first_appt),
+    "date_unit" = "week"
     )
 }
