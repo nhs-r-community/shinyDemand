@@ -2,7 +2,7 @@
 #'
 #' @description Plot the waiting list over time, optionally varying
 #' the input/ output rate at a "specific" break point in the data
-#' @wait_frame dataframe. You probably made this with a function like
+#' @param wait_frame dataframe. You probably made this with a function like
 #' \code{\link{simple_input}}
 #'
 #' @return A plot showing the size of the wait list over time

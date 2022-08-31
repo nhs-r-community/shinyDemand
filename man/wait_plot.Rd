@@ -6,6 +6,10 @@
 \usage{
 wait_plot(wait_frame)
 }
+\arguments{
+\item{wait_frame}{dataframe. You probably made this with a function like
+\code{\link{simple_input}}}
+}
 \value{
 A plot showing the size of the wait list over time
 }
