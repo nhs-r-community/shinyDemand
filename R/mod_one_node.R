@@ -1,4 +1,4 @@
-#' one_node UI Function
+#' no_data_one_node UI Function
 #'
 #' @description A shiny Module.
 #'
@@ -7,7 +7,7 @@
 #' @noRd
 #'
 #' @importFrom shiny NS tagList
-mod_one_node_ui <- function(id){
+mod_no_data_one_node_ui <- function(id){
   ns <- NS(id)
   tagList(
 
@@ -41,8 +41,7 @@ mod_one_node_ui <- function(id){
       )
     ),
     flowLayout(
-      checkboxInput(ns("showHistory"), "Show history"),
-      checkboxInput(ns("load_data"), "Load data")
+      checkboxInput(ns("showHistory"), "Show history")
     ),
 
     fluidRow(
@@ -70,10 +69,10 @@ mod_one_node_ui <- function(id){
   )
 }
 
-#' one_node Server Functions
+#' no_data_one_node Server Functions
 #'
 #' @noRd
-mod_one_node_server <- function(id, real_data){
+mod_no_data_one_node_server <- function(id, real_data){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
 

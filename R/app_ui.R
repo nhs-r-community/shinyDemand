@@ -14,13 +14,14 @@ app_ui <- function(request) {
         sidebarMenu(
           menuItem("One node", tabName = "one_node", icon = icon("dashboard")),
           menuItem("Two nodes", tabName = "two_nodes", icon = icon("th"))
+
         )
       ),
       dashboardBody(
         tabItems(
           tabItem(tabName = "one_node",
                   h1("One node"),
-                  mod_one_node_ui("one_node_1")
+                  mod_no_data_one_node_ui("no_data_one_node_1")
                   ),
 
           # Second tab content
