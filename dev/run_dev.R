@@ -1,4 +1,14 @@
 
+# if the data functions exist then load them
+
+if(file.exists("data_functions.R")){
+
+  source("data_functions.R")
+
+  # note this should return a function called "return_data"
+  # see Roxygen of data_functions.R for more
+}
+
 # Set options here
 options(golem.app.prod = FALSE) # TRUE = production mode, FALSE = development mode
 
