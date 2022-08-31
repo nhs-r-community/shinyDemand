@@ -28,7 +28,8 @@ mod_one_node_ui <- function(id){
 
         fluidRow(
           column(4, numericInput(ns("wait_list_hx"),
-                                 "Waiting list at start of series", value = 20)),
+                                 "Waiting list at start of series",
+                                 value = 20)),
           column(4, numericInput(ns("rate_in_hx"),
                                  "Historical rate in to the service",
                                  value = 5)),
@@ -42,7 +43,7 @@ mod_one_node_ui <- function(id){
     flowLayout(
       checkboxInput(ns("showHistory"), "Show history"),
       checkboxInput(ns("load_data"), "Load data")
-      ),
+    ),
 
     fluidRow(
       column(12,
@@ -72,18 +73,32 @@ mod_one_node_ui <- function(id){
 #' one_node Server Functions
 #'
 #' @noRd
-mod_one_node_server <- function(id){
+mod_one_node_server <- function(id, real_data){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
 
     historical_data <- reactive({
-      simple_input(wait_list = input$wait_list_hx,
-                   rate_in = input$rate_in_hx,
-                   rate_out = input$rate_out_hx,
-                   start_date = input$date_range_hx[1],
-                   end_date = input$date_range_hx[2],
-                   date_unit = "day",
-                   historical = TRUE)
+
+      if(input$load_data){
+
+        simple_input(wait_list = real_data$current_waiting_list,
+                     rate_in = real_data$avg_week_ref,
+                     rate_out = real_data$avg_week_treat,
+                     start_date = input$date_range_hx[1],
+                     end_date = input$date_range_hx[2],
+                     date_unit = "day",
+                     historical = TRUE)
+
+      } else {
+
+        simple_input(wait_list = input$wait_list_hx,
+                     rate_in = input$rate_in_hx,
+                     rate_out = input$rate_out_hx,
+                     start_date = input$date_range_hx[1],
+                     end_date = input$date_range_hx[2],
+                     date_unit = "day",
+                     historical = TRUE)
+      }
     })
 
     daily_data <- reactive({
@@ -93,12 +108,12 @@ mod_one_node_server <- function(id){
                                   input$wait_list_current)
 
       simple_input(wait_list = wait_list_current,
-                                 rate_in = input$rate_in,
-                                 rate_out = input$rate_out,
-                                 start_date = input$date_range[1],
-                                 end_date = input$date_range[2],
-                                 date_unit = "day",
-                                 historical = FALSE)
+                   rate_in = input$rate_in,
+                   rate_out = input$rate_out,
+                   start_date = input$date_range[1],
+                   end_date = input$date_range[2],
+                   date_unit = "day",
+                   historical = FALSE)
 
     })
 

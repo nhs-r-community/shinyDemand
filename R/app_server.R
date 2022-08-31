@@ -7,5 +7,10 @@
 app_server <- function(input, output, session) {
   # Your application server logic
 
-  mod_one_node_server("one_node_1")
+  if(exists("return_data")){
+
+    real_data <- return_data()
+  }
+
+  mod_one_node_server("one_node_1", real_data = real_data)
 }
