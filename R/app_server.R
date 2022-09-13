@@ -7,13 +7,17 @@
 app_server <- function(input, output, session) {
   # Your application server logic
 
-  if(exists("return_data")){
+  observe(
 
-    real_data <- return_data("tm378")
+    if(input$load_data){
 
-    mod_data_one_node_server("data_one_node_1", real_data = real_data)
-  }
+      real_data <- return_data("tm378")
 
-    mod_no_data_one_node_server("no_data_one_node_1")
+      mod_data_one_node_server("data_one_node_1", real_data = real_data)
+    }
+  )
+
+
+  mod_no_data_one_node_server("no_data_one_node_1")
 
 }
