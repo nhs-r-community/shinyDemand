@@ -19,6 +19,10 @@ app_server <- function(input, output, session) {
 
   output$team_selectUI <- renderUI({
 
+    if(get_golem_config("location") != "nottshc"){
+      return()
+    }
+
     team_ui_function()
   })
 

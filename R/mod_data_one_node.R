@@ -49,7 +49,7 @@ mod_data_one_node_server <- function(id, real_data){
       # glue together date range, waiting list, rate in and out
 
       glue::glue("First date in series: {real_data$min_date_referrals}<br>",
-                 "Last date in series: {real_data$min_date_referrals}<br>",
+                 "Last date in series: {real_data$max_date_referrals}<br>",
                  "Waiting list at start of intervention:
                    {real_data$current_waiting_list}<br>",
                  "Average weekly referrals in:
@@ -85,11 +85,7 @@ mod_data_one_node_server <- function(id, real_data){
 
       plot_data <- rbind(historical_data(), daily_data())
 
-      save(plot_data, file = "check.rda")
-
       wait_plot(plot_data)
-
     })
-
   })
 }
