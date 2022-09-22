@@ -1,3 +1,11 @@
+# make the team data
+# get teams
+
+teams_df <- nottshcData::get_rio_team_spec(team_status = TRUE) |>
+  nottshcData::tidy_rio_team_spec() |>
+  dplyr::collect() |>
+  dplyr::filter(stringr::str_detect(team_desc, "CAMHS - |LMHT|CMHT|EIP"))
+
 #' Function to return data. This is an optional function which allows users
 #' to load data into the application instead of defining it with sliders
 #'
@@ -32,22 +40,22 @@ return_data <- function(selected_team){
     dplyr::filter(team_code %in% selected_team) %>%
     dplyr::filter(referrals_referral_datetime > "2021-04-01") %>%
     dplyr::select(client_id, referral_id, referrals_referral_datetime,
-           referrals_firstappt_datetime, referrals_discharge_datetime,
-           team_code, team_desc) %>%
+                  referrals_firstappt_datetime, referrals_discharge_datetime,
+                  team_code, team_desc) %>%
     dplyr::collect() %>%
     dplyr::left_join(contacts)
 
   referrals <- referrals %>%
     dplyr::mutate(status =
                     dplyr::case_when(
-               n > 1 & !is.na(referrals_firstappt_datetime) ~ "Treatment",
-               is.na(referrals_firstappt_datetime) &
-                 !is.na(referrals_discharge_datetime) ~ "Unassessed",
-               n = 1 & !is.na(referrals_firstappt_datetime) &
-                 !is.na(referrals_discharge_datetime) ~ "Assessed & Discharged",
-               is.na(referrals_firstappt_datetime) &
-                 is.na(referrals_discharge_datetime) ~ "Current Waiting List",
-               TRUE ~ "Status Pending")) |>
+                      n > 1 & !is.na(referrals_firstappt_datetime) ~ "Treatment",
+                      is.na(referrals_firstappt_datetime) &
+                        !is.na(referrals_discharge_datetime) ~ "Unassessed",
+                      n = 1 & !is.na(referrals_firstappt_datetime) &
+                        !is.na(referrals_discharge_datetime) ~ "Assessed & Discharged",
+                      is.na(referrals_firstappt_datetime) &
+                        is.na(referrals_discharge_datetime) ~ "Current Waiting List",
+                      TRUE ~ "Status Pending")) |>
     dplyr::mutate(referral_date = as.Date(referrals_referral_datetime),
                   first_appt = as.Date(referrals_firstappt_datetime),
                   discharge_date = as.Date(referrals_discharge_datetime))
@@ -61,7 +69,7 @@ return_data <- function(selected_team){
 
   avg_week_ref <- referrals %>%
     dplyr::mutate(week = lubridate::floor_date(referrals_referral_datetime,
-                                        unit = "week")) %>%
+                                               unit = "week")) %>%
     dplyr::group_by(week) %>%
     dplyr::count() %>%
     dplyr::ungroup() |>
@@ -70,7 +78,7 @@ return_data <- function(selected_team){
   avg_week_ax <- referrals %>%
     dplyr::filter(!is.na(referrals_firstappt_datetime)) %>%
     dplyr::mutate(week = lubridate::floor_date(referrals_firstappt_datetime,
-                                        unit = "week")) %>%
+                                               unit = "week")) %>%
     dplyr::group_by(week) %>%
     dplyr::count() %>%
     dplyr::ungroup() |>
@@ -79,7 +87,7 @@ return_data <- function(selected_team){
   avg_week_treat <- referrals %>%
     dplyr::filter(status == "Treatment") %>%
     dplyr::mutate(week = lubridate::floor_date(referrals_firstappt_datetime,
-                                        unit = "week")) %>%
+                                               unit = "week")) %>%
     dplyr::group_by(week) %>%
     dplyr::count() %>%
     dplyr::ungroup() |>
@@ -99,8 +107,8 @@ return_data <- function(selected_team){
     dplyr::filter(is.na(referrals_discharge_datetime)) %>%
     dplyr::filter(!is.na(referrals_firstappt_datetime)) %>%
     dplyr::select(client_id, referral_id, referrals_referral_datetime,
-           referral_reason_desc, referrals_firstappt_datetime,
-           referrals_discharge_datetime, team_code, team_desc) %>%
+                  referral_reason_desc, referrals_firstappt_datetime,
+                  referrals_discharge_datetime, team_code, team_desc) %>%
     dplyr::collect()  %>%
     nrow()
 
@@ -117,7 +125,7 @@ return_data <- function(selected_team){
 
   ax_to_treat <- counting %>%
     dplyr::filter(status == "Treatment" |
-             status == "Assessed & Discharged") %>%
+                    status == "Assessed & Discharged") %>%
     dplyr::mutate(percent = n/sum(n)) %>%
     dplyr::filter(status == "Treatment") %>%
     dplyr::pull(percent)
@@ -136,5 +144,20 @@ return_data <- function(selected_team){
     "max_date_referrals" = max(referrals$referral_date),
     "first_appt" = min(referrals$first_appt, na.rm = TRUE),
     "date_unit" = "week"
-    )
+  )
+}
+
+#' Function to draw reactive interface to select teams
+#'
+#' @return Shiny input with team codes, named with team names
+#' @export
+team_ui_function <- function(){
+  team_list <- teams_df |>
+    dplyr::pull(team_code)
+
+  names(team_list) <- teams_df |>
+    dplyr::pull(team_desc)
+
+  selectInput("select_team", "Team select",
+              choices = team_list, selected = "AMH LMHT Broxtowe & Hucknall")
 }

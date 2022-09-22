@@ -22,9 +22,11 @@ stop()
 usethis::use_pipe()
 
 ## Amend DESCRIPTION with dependencies read from package code parsing
-attachment::att_amend_desc()
+# attachment::att_amend_desc()
 
 usethis::use_package("dplyr")
+usethis::use_package("stringr")
+usethis::use_package("ggplot2")
 usethis::use_dev_package("nottshcData")
 
 ## Add modules ----

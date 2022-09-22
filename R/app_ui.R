@@ -14,7 +14,8 @@ app_ui <- function(request) {
         sidebarMenu(
           menuItem("One node", tabName = "one_node", icon = icon("dashboard")),
           menuItem("Two nodes", tabName = "two_nodes", icon = icon("th")),
-          checkboxInput("load_data", "Load data?")
+          checkboxInput("load_data", "Load data?", value = TRUE),
+          uiOutput("team_selectUI")
 
         )
       ),
