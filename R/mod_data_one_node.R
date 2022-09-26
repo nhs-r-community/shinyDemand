@@ -50,18 +50,21 @@ mod_data_one_node_server <- function(id, real_data){
 
       glue::glue("First date in series: {real_data$min_date_referrals}<br>",
                  "Last date in series: {real_data$max_date_referrals}<br>",
-                 "Waiting list at start of intervention:
-                   {real_data$current_waiting_list}<br>",
+                 # "Waiting list at start of intervention:
+                 #   {tail(historical_data()$n, 1)}<br>",
                  "Average weekly referrals in:
+                   {round(real_data$avg_week_ref, 1)}<br>",
+                 "Average weekly referrals assessed:
                    {round(real_data$avg_week_ax, 1)}<br>",
-                 "Average weekly referrals out:
-                   {round(real_data$avg_week_ref, 1)}<br>")
+                 "Average weekly referrals discharged:
+                   {round(real_data$avg_week_ref *
+                   (1 - real_data$ref_to_ax), 1)}")
     })
 
     historical_data <- reactive({
 
       simple_input(wait_list = 0, # THIS IS WRONG
-                   rate_in = real_data$avg_week_ref,
+                   rate_in = real_data$avg_week_ref * real_data$ref_to_ax,
                    rate_out = real_data$avg_week_ax,
                    start_date = real_data$min_date_referrals,
                    end_date = real_data$max_date_referrals,

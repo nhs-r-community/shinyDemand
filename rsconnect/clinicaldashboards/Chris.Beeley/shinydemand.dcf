@@ -1,0 +1,13 @@
+name: shinydemand
+title: shinyDemand
+username: Chris.Beeley
+account: Chris.Beeley
+server: clinicaldashboards
+hostUrl: https://clinicaldashboards/__api__
+appId: 327
+bundleId: 10109
+url: https://clinicaldashboards/content/ad7f8ceb-a52f-4a2c-af15-be474ae9eae9/
+when: 1664204032.72638
+lastSyncTime: 1664204032.72638
+asMultiple: FALSE
+asStatic: FALSE
